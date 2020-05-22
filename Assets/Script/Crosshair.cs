@@ -48,9 +48,9 @@ public class Crosshair : MonoBehaviour
         Ray ray = camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));       //메인 카메라
 
         RaycastHit hit;
-        if (Physics.Raycast(ray,out hit, Reach)) {
-            Debug.Log("Ray hit : "+hit.collider.tag);
-        }
+     //   if (Physics.Raycast(ray,out hit, Reach)) {
+     //       Debug.Log("Ray hit : "+hit.collider.tag);
+     //   }
 
         if (isOn == true) {
             Debug.DrawRay(ray.origin, ray.direction * Reach, debugRayColor);

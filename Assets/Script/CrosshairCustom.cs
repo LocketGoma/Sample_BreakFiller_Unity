@@ -46,17 +46,17 @@ public class CrosshairCustom : MonoBehaviour
     // Update is called once per frame
     void Update() {
         Ray ray = gameObject.GetComponent<Camera>().ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));       //메인 카메라
-        Debug.Log("ray:" + ray);
+        //Debug.Log("ray:" + ray);
         Camera cam = gameObject.GetComponent<Camera>();
-        Debug.Log((cam.transform.rotation * Vector3.zero * cam.nearClipPlane) + cam.transform.position);
+       // Debug.Log((cam.transform.rotation * Vector3.zero * cam.nearClipPlane) + cam.transform.position);
 
         /*
          1. Ray의 첫번째 값 : 카메라 Viewport의 시작지점 (카메라 앞의 '사각형') => 카메라 시작 좌표 * 카메라 로테이션 회전 + near값 만큼 전진.
          2. Ray의 두번째 값 : 1번 값에 수직인 벡터
          
          */
-        
-        MyRay m_ray= CameraViewToRay(cam);
+
+        CustomRay m_ray = CameraViewToRay(cam);
         Debug.Log(m_ray.Direction);
 
         RaycastHit hit;         //얘는 걍 있는거 쓰기.
@@ -71,11 +71,11 @@ public class CrosshairCustom : MonoBehaviour
     }
 
     //카메라 정보 -> MyRay 값 리턴.
-    MyRay CameraViewToRay(Camera cam) {
+    CustomRay CameraViewToRay(Camera cam) {
         Vector3 original = (cam.transform.forward * cam.nearClipPlane) + cam.transform.position;
         //https://answers.unity.com/questions/46583/how-to-get-the-look-or-forward-vector-of-the-camer.html
         Vector3 direction = cam.transform.forward;
-        return new MyRay(original,direction);
+        return new CustomRay(original,direction);
     }
     //https://hombody.tistory.com/113
     bool MyRayCast() {
@@ -84,18 +84,5 @@ public class CrosshairCustom : MonoBehaviour
     }
 
 }
-//https://github.com/Unity-Technologies/UnityCsReference/blob/master/Runtime/Export/Geometry/Ray.cs
-public class MyRay {
-    private Vector3 _Origin;     //기본값
-    private Vector3 _Direction;  //좌표값?
-
-    public Vector3 Origin { get { return _Origin; } set { _Origin = value; } }
-    public Vector3 Direction { get { return _Direction; } set { _Direction = value; } }
-    public MyRay(Vector3 origin, Vector3 direction) {
-        _Origin = origin;
-        _Direction = direction.normalized;      //벡터 정규화 (방향만 살리고 크기를 1.0으로 조절)
-    }
 
 
-
-}
