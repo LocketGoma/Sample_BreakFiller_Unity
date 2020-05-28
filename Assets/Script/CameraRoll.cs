@@ -36,7 +36,6 @@ public class CameraRoll : MonoBehaviour
         mouseSmooth.y = Mathf.Lerp(mouseSmooth.y, mouseDelta.y, 1f / Smoothing.y);
         mouseAbsolute += mouseSmooth;
 
-
         //clamp (범위 지정)
         if (clampInDegrees.x < 360) {
             mouseAbsolute.x = Mathf.Clamp(mouseAbsolute.x, -clampInDegrees.x * gab, clampInDegrees.x * gab);
@@ -49,6 +48,5 @@ public class CameraRoll : MonoBehaviour
         transform.localRotation *= targetOrientation;       //쿼터니언 값 곱해주기.
 
         transform.localRotation *= (Quaternion.AngleAxis(mouseAbsolute.x, transform.InverseTransformDirection(Vector3.up))); //* 여기도.
-
     }
 }
