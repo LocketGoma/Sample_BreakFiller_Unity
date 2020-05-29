@@ -5,6 +5,7 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
 
+    [Range (0.0f,10.0f)]
     [SerializeField] private float speed = 5f;
     [SerializeField] private Transform cameraTransform;
     private Vector3 Gravity = Vector3.down * 9.81f;
@@ -38,13 +39,13 @@ public class Movement : MonoBehaviour
 
 
 
+        //정석
+        //GetComponent<Rigidbody>().AddForce(ChangeVelocity, ForceMode.VelocityChange);
+        //GetComponent<Rigidbody>().AddForce(Gravity * GetComponent<Rigidbody>().mass);
 
-        GetComponent<Rigidbody>().AddForce(ChangeVelocity, ForceMode.VelocityChange);
-        GetComponent<Rigidbody>().AddForce(Gravity * GetComponent<Rigidbody>().mass);
+        //이것도 되긴 함
+        transform.Translate(ChangeVelocity);            
 
-        //transform.Translate(Input.GetAxis("Horizontal") * speed * Time.deltaTime,0f, Input.GetAxis("Vertical") * speed * Time.deltaTime);
-
-        //transform.localRotation = Quaternion.Euler(new Vector2(0,transform.GetChild(0).localRotation.eulerAngles.y));
 
     }
 }
