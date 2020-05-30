@@ -16,6 +16,8 @@ public class CrosshairCustom : MonoBehaviour
     [HideInInspector] private GameObject normalCrosshairPrefabInstance;         //기본 크로스헤어 복사본
     [HideInInspector] private GameObject selectedCrosshairPrefabInstance;       //선택 크로스헤어 복사본
 
+    [Header("Target")]
+    [SerializeField] private Vector3 targetVector;
 
     [Header("Debug Setting")]
     [SerializeField] private bool isOn = true;
@@ -57,7 +59,7 @@ public class CrosshairCustom : MonoBehaviour
          */
 
         CustomRay m_ray = CameraViewToRay(cam);
-        Debug.Log(m_ray.Direction);
+       // Debug.Log(m_ray.Direction);
 
         RaycastHit hit;         //얘는 걍 있는거 쓰기.
       // if (Physics.Raycast(ray, out hit, Reach)) {
@@ -75,12 +77,16 @@ public class CrosshairCustom : MonoBehaviour
         Vector3 original = (cam.transform.forward * cam.nearClipPlane) + cam.transform.position;
         //https://answers.unity.com/questions/46583/how-to-get-the-look-or-forward-vector-of-the-camer.html
         Vector3 direction = cam.transform.forward;
+        targetVector = direction;
         return new CustomRay(original,direction);
     }
     //https://hombody.tistory.com/113
     bool MyRayCast() {
         
         return false;
+    }
+    public Vector3 getTargetVector() {
+        return targetVector;
     }
 
 }
