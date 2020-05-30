@@ -14,7 +14,12 @@ public class PlayerControl : MonoBehaviour
     void Update()
     {
         if (Input.GetMouseButtonUp(0)) {
-
+            ShootBullet();
         }
     }
+
+    void ShootBullet() {
+
+    }
+
 }
