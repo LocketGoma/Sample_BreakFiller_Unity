@@ -23,12 +23,15 @@ public class PlayerControl : MonoBehaviour
     private void Start() {
         power = minPower;
         text.text = power.ToString();
+
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log((maxPower / powerChargeTime) * (Time.deltaTime));
+        //Debug.Log((maxPower / powerChargeTime) * (Time.deltaTime));
         if (Input.GetMouseButton(0)){
             power += ((((power * power)/10) * (Time.deltaTime / powerChargeTime)));
             if (power > maxPower || autoCharge)
@@ -54,5 +57,6 @@ public class PlayerControl : MonoBehaviour
         Debug.Log("shoot");
         Instantiate(bullet, transform.position, transform.rotation).GetComponent<Rigidbody>().AddForce(transform.GetComponentInChildren<CrosshairCustom>().getTargetVector()* power, ForceMode.Impulse);
     }
+    
 
 }
