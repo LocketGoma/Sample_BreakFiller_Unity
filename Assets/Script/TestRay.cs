@@ -35,6 +35,8 @@ public class TestRay : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(ry[i], out hit, reach)&& !hit.collider.tag.Equals("Untagged")) {
                 Debug.Log("Ray hit : "+hit.collider.tag);
+                Debug.Log(gameObject.GetComponent<Rigidbody>().velocity);
+                hit.collider.GetComponent<Rigidbody>().AddForce(gameObject.GetComponent<Rigidbody>().velocity);
             }
         }
     }
