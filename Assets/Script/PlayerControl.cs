@@ -33,7 +33,7 @@ public class PlayerControl : MonoBehaviour
     {
         //Debug.Log((maxPower / powerChargeTime) * (Time.deltaTime));
         if (Input.GetMouseButton(0)){
-            power += ((((power * power)/10) * (Time.deltaTime / powerChargeTime)));
+            power += (Mathf.Log(Mathf.Pow(power,5), powerChargeTime) * Time.deltaTime);     //속도 올라가는걸 지수함수 말고 로그함수로 해야할거같은데.
             if (power > maxPower || autoCharge)
                 power = maxPower;
 
@@ -55,7 +55,7 @@ public class PlayerControl : MonoBehaviour
 
     void ShootBullet() {
         Debug.Log("shoot");
-        Instantiate(bullet, transform.position, transform.rotation).GetComponent<Rigidbody>().AddForce(transform.GetComponentInChildren<CrosshairCustom>().getTargetVector()* power, ForceMode.Impulse);
+        Instantiate(bullet, transform.position, transform.rotation).GetComponent<Rigidbody>().AddForce(transform.GetComponentInChildren<CrosshairCustom>().getTargetVector() * power, ForceMode.Impulse);
     }
     
 

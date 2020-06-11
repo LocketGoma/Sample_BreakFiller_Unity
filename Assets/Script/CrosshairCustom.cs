@@ -31,13 +31,13 @@ public class CrosshairCustom : MonoBehaviour
             normalCrosshairPrefabInstance = normalCrosshairPrefab;
         }
         else {
-            Debug.LogError("NormalCrosshair Image was not found!!");
+            Debug.LogError("System : NormalCrosshair Image was not found!!");
         }
         if (selectedCrosshairPrefab != null) {
             selectedCrosshairPrefabInstance = selectedCrosshairPrefab;
         }
         else {
-            Debug.LogError("SelectedCrosshair Image was not found!!");
+            Debug.LogError("System : SelectedCrosshair Image was not found!!");
         }
 
 

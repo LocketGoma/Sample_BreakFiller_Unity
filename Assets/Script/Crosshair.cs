@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 //레이캐스트 잔뜩
 public class Crosshair : MonoBehaviour
 {
@@ -28,13 +29,13 @@ public class Crosshair : MonoBehaviour
         if (normalCrosshairPrefab != null) {
             normalCrosshairPrefabInstance = normalCrosshairPrefab;
         } else {
-            Debug.LogError("NormalCrosshair Image was not found!!");
+            Debug.LogError("System : NormalCrosshair Image was not found!!");
         }
         if (selectedCrosshairPrefab != null) {
             selectedCrosshairPrefabInstance = selectedCrosshairPrefab;
         }
         else {
-            Debug.LogError("SelectedCrosshair Image was not found!!");
+            Debug.LogError("System : SelectedCrosshair Image was not found!!");
         }
 
 
@@ -48,9 +49,17 @@ public class Crosshair : MonoBehaviour
         Ray ray = camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));       //메인 카메라
 
         RaycastHit hit;
-     //   if (Physics.Raycast(ray,out hit, Reach)) {
-     //       Debug.Log("Ray hit : "+hit.collider.tag);
-     //   }
+        var checkRayHit = Physics.Raycast(ray, out hit, Reach);
+        if (checkRayHit) {
+            //Debug.Log("Ray hit : "+hit.collider.tag);
+            if (hit.collider.tag != "Untagged") {
+                normalCrosshairPrefab.GetComponent<Image>().color = new Color(1, 0, 0);
+            }
+
+        } 
+        if (checkRayHit == false || hit.collider.tag == "Untagged") {
+            normalCrosshairPrefab.GetComponent<Image>().color = new Color(1, 1, 1);
+        }
 
         if (isOn == true) {
             Debug.DrawRay(ray.origin, ray.direction * Reach, debugRayColor);

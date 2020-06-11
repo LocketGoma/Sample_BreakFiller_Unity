@@ -494,7 +494,7 @@ GameObject:
   - component: {fileID: 1184094992}
   - component: {fileID: 1184094991}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Crosshair basic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -921,11 +921,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8283510892479227520, guid: 5f97c1660b8220141840c30e92c4305b,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8283510892479227527, guid: 5f97c1660b8220141840c30e92c4305b,
         type: 3}
       propertyPath: normalCrosshairPrefab
       value: 
       objectReference: {fileID: 1184094989}
+    - target: {fileID: 8283510892479227527, guid: 5f97c1660b8220141840c30e92c4305b,
+        type: 3}
+      propertyPath: Reach
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 8283510893046103961, guid: 5f97c1660b8220141840c30e92c4305b,
         type: 3}
       propertyPath: m_LocalPosition.x
