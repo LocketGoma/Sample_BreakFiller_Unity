@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class TestRay : MonoBehaviour
 {
-    public int mass = 100;
-    public float reach = 5f;
+    [Header("basic")]
+    public int raySticks = 100;
+    public float searchReach = 5f;
+
+    [Header("explosion")]
+    public float explosePower = 30f;
+    public float exploseSize = 5f;
+    public ParticleSystem exploseParticle;
+
     Vector3[] vt;
     Ray[] ry;
     // Start is called before the first frame update
     void Start()
     {
-        vt = new Vector3[mass];
-        ry = new Ray[mass];
+        vt = new Vector3[raySticks];
+        ry = new Ray[raySticks];
         MakeRays();
 
         Invoke("BulletClear", 3);
@@ -20,7 +27,7 @@ public class TestRay : MonoBehaviour
 
 
     public void MakeRays() {
-        for (int i = 0; i < mass; i++) {
+        for (int i = 0; i < raySticks; i++) {
             vt[i] = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
             ry[i] = new Ray((vt[i] * MaxInVector3(gameObject.transform.localScale)) + gameObject.transform.position, vt[i]);
             //Debug.Log(vt[i]);
@@ -29,13 +36,15 @@ public class TestRay : MonoBehaviour
 
     }
     public void Update() {
-        for (int i = 0; i < mass; i++) {
+
+
+        for (int i = 0; i < raySticks; i++) {
             ry[i] = new Ray((vt[i] * MaxInVector3(gameObject.transform.localScale)) + gameObject.transform.position, vt[i]);
-            Debug.DrawRay(ry[i].origin, ry[i].direction * reach, new Color((vt[i].x + 1) / 2, (vt[i].y + 1) / 2, (vt[i].z + 1) / 2));
+            Debug.DrawRay(ry[i].origin, ry[i].direction * searchReach, new Color((vt[i].x + 1) / 2, (vt[i].y + 1) / 2, (vt[i].z + 1) / 2));
             RaycastHit hit;
-            if (Physics.Raycast(ry[i], out hit, reach)&& !hit.collider.tag.Equals("Untagged")) {
-                Debug.Log("Ray hit : "+hit.collider.tag);
-                Debug.Log(gameObject.GetComponent<Rigidbody>().velocity);
+            if (Physics.Raycast(ry[i], out hit, searchReach) && !hit.collider.tag.Equals("Untagged")) {
+                //Debug.Log("Ray hit : "+hit.collider.tag);
+               // Debug.Log(gameObject.GetComponent<Rigidbody>().velocity);
                 hit.collider.GetComponent<Rigidbody>().AddForce(gameObject.GetComponent<Rigidbody>().velocity);
             }
         }
@@ -48,6 +57,37 @@ public class TestRay : MonoBehaviour
         return result;
     }
     private void BulletClear() {
+        Explose();        
+    }
+    private void Explose() {
+        //파티클 자료 : https://docs.unity3d.com/kr/2018.4/Manual/PartSysExplosion.html
+
+        //파티클 오브젝트가 생성이 안된 상태여서 "재생"이 되지 않았음.
+        Instantiate(exploseParticle,transform.position,transform.rotation);
+
+        if (exploseParticle != null)
+            exploseParticle.Play();
+
+        if (exploseParticle.isEmitting) Debug.Log("Emit");
+        if (exploseParticle.isPlaying) Debug.Log("Play");
+        if (exploseParticle.isPaused) Debug.Log("Pause");
+        if (exploseParticle.isStopped) Debug.Log("Stop");
+
+        
+
+
+        GetComponent<MeshRenderer>().material.color = Color.red;
+        for (int i = 0; i < raySticks; i++) {
+            //Debug.Log(ry[i].origin+">"+ry[i].direction);
+
+            ry[i] = new Ray((vt[i] * MaxInVector3(gameObject.transform.localScale)) + gameObject.transform.position, vt[i]);
+            Debug.DrawRay(ry[i].origin, ry[i].direction * exploseSize, new Color((vt[i].x + 1) / 2, (vt[i].y + 1) / 2, (vt[i].z + 1) / 2),3f);
+            RaycastHit hit;
+            if (Physics.Raycast(ry[i], out hit, exploseSize) && hit.collider.GetComponent<Rigidbody>()!= null) {                                
+                hit.collider.GetComponent<Rigidbody>().AddForce(ry[i].direction * explosePower);
+            }
+        }
         Destroy(gameObject);
     }
+
 }
